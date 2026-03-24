@@ -1,5 +1,5 @@
 # Define a boolean variable
-myBoolean = True 
+my_boolean = True 
 
 # Type of the boolean variable
-type(myBoolean)  # Output: <class 'bool'>
+type(my_boolean)  # Output: <class 'bool'>

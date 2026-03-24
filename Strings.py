@@ -18,9 +18,9 @@ print("Hello, \tWorld!") # Output: Hello, 	 World!
 "hello, world!".count("o") # Output: 2
 
 # Accessing characters in a string with indexing
-myName = "Serhat"
-myName[0] # Output: 'S'
-myName[-1] # Output: 't'
+my_name = "Serhat"
+my_name[0] # Output: 'S'
+my_name[-1] # Output: 't'
 
 # Get the length of a string
 len("hello, world!") # Output: 13

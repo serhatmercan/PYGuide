@@ -2,16 +2,16 @@
 # You can create a new tuple by concatenating two tuples or by slicing an existing tuple.
 
 # Creating a Tuple
-myTuple = ("apple", "banana", "cherry")
+my_tuple = ("apple", "banana", "cherry")
 
 # Accessing Element with Indexing
-myTuple[0]  # Output: 'apple'
+my_tuple[0]  # Output: 'apple'
 
 # Get Number of Occurrences of an Element
-myTuple.count("cherry")  # Output: 1 
+my_tuple.count("cherry")  # Output: 1 
 
 # Get Index of an Element
-myTuple.index("banana")  # Output: 1
+my_tuple.index("banana")  # Output: 1
 
 # Type of the Tuple
-type(myTuple)  # Output: <class 'tuple'>
+type(my_tuple)  # Output: <class 'tuple'>

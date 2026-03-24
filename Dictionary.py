@@ -1,5 +1,5 @@
 # Creating an empty dictionary
-myDictionary = dict() 
+my_dictionary = dict() 
 
 # Definition of the dictionary : Key-Value pairs
 fitness_dictionary = {
