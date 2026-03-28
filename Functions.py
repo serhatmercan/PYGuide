@@ -55,8 +55,11 @@ print(counter) # Output: 1
 
 # Lambda Function
 # A lambda function is an anonymous function that can take any number of arguments but can only have one expression. It is often used for short, simple functions that are not reused elsewhere in the code.
-numbers = [1, 2, 3, 4, 5]   
-squared_numbers = list(map(lambda x: x ** 2, numbers)) # The lambda function takes a single argument x and returns its square. The map function applies this lambda function to each element in the numbers list.
+numbers = [1, 2, 3, 4, 5] 
+
+even_numbers = list(filter(lambda x: x % 2 == 0, numbers)) # The lambda function takes a single argument x and returns True if x is even (i.e., divisible by 2 with no remainder) and False otherwise. Output: [2, 4]
+squared_numbers = list(map(lambda x: x ** 2, numbers)) # The lambda function takes a single argument x and returns its square. The map function applies this lambda function to each element in the numbers list. Output: [1, 4, 9, 16, 25]
+
 print(squared_numbers) # Output: [1, 4, 9, 16, 25]
 
 # Map Function
