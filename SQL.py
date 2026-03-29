@@ -123,6 +123,30 @@ def basic_queries(cursor):
     # ID: 3, Name: Charlie Brown, Age: 19, Email: charlie.brown@example.com, City: Chicago 
     # ID: 4, Name: David White, Age: 18, Email: david.white@example.com, City: Chicago
 
+    # WHERE - NOT = Example of a query to select students from the Students table where the city is not 'Chicago'
+    cursor.execute("SELECT name, city FROM Students WHERE city != 'Chicago'") # Execute the SQL command to select the name and city of all records from the Students table where the city is not 'Chicago'
+    students = cursor.fetchall() # Fetch all results from the executed query
+    for student in students:
+        print(f"Name: {student[0]}, City: {student[1]}") # Print each student's name and city in a formatted string
+
+    # Output: Example output of the WHERE - NOT query showing only students not from Chicago with their name and city
+    # Name: Alice Johnson, City: New York
+    # Name: Bob Smith, City: Los Angeles
+    # Name: Eve Davis, City: San Francisco
+
+    # WHERE - IN = Example of a query to select students from the Students table where the city is either 'Chicago' or 'New York'
+    cursor.execute("SELECT * FROM Students WHERE city IN ('Chicago', 'New York')") # Execute the SQL command to select all records from the Students table where the city is either 'Chicago' or 'New York'
+    students = cursor.fetchall() # Fetch all results from the executed query
+
+    for student in students:
+        print(f"ID: {student[0]}, Name: {student[1]}, Age: {student[2]}, Email: {student[3]}, City: {student[4]}") # Print each student's details in a formatted string
+    
+    # Output: Example output of the WHERE - IN query showing only students from Chicago or New York with their details
+    # ID: 1, Name: Alice Johnson, Age: 20, Email: alice.johnson@example.com, City: New York
+    # ID: 3, Name: Charlie Brown, Age: 19, Email: charlie.brown@example.com, City: Chicago
+    # ID: 4, Name: David White, Age: 18, Email: david.white@example.com, City: Chicago
+
+
 def aggregate_functions(cursor):
     # COUNT = Example of a query to count the number of students in the Students table
     cursor.execute('SELECT COUNT(*) FROM Students') # Execute the SQL command to count the total number of records in the Students table
