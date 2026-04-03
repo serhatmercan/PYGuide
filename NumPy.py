@@ -62,12 +62,57 @@ my_array2 / my_array1  # Output: array([10., 10., 10., 10., 10.])
 
 # Matrix
 matrix1 = np.array([[1, 2], [3, 4]])
+matrix2 = np.array([[5, 6], [7, 8]])
+matrix3 = np.array([5, 6])
+matrix4 = np.array([[7], [8]])
 
 # Matrix: Accessing elements in a matrix with indexing
 matrix1[0][1] # Output: 2
 
+# Matrix: Shape of the matrix
+matrix1.shape # Output: (2, 2)
+
 # Matrix: Sum of all elements in the matrix
 matrix1.sum() # Output: 10
 
+# Matrix: Element-wise addition of two matrices
+matrix1 + matrix2 # Output: array([[6, 8], [10, 12]])
+matrix1 + matrix3 # Output: array([[6, 8], [8, 10]])
+matrix1 + matrix4 # Output: array([[8, 9], [10, 11]])
+
+# Matrix: Dot product of two matrices
+matrix5 = np.array([[1, 2, 3], [4, 5, 6]])
+matrix6 = np.array([[7, 8], [9, 10], [11, 12]])
+
+np.dot(matrix5, matrix6) # Output: array([[58,  64], [139, 154]])
+
 # Matrix: Random matrix
 np.random.random((2, 3)) # Output: 2x3 array of random numbers between 0 and 1, e.g., array([[0.5488135 , 0.71518937, 0.60276338], [0.54488318, 0.4236548 , 0.64589411]])
+
+# Matrix: Reshaping a matrix
+matrix5.reshape(3, 2) # Output: array([[1, 2], [3, 4], [5, 6]])
+
+# Matrix: Transpose of a matrix
+matrix6.T # Output: array([[7, 9, 11], [8, 10, 12]])
+
+# Matrix: Operations on matrices
+array1 = np.random.randint(1, 100, 5) # Output: array of 5 random integers between 1 and 99, e.g., array([83, 53, 70, 44, 60])
+
+# Matrix: Operations -> Conditional selection
+array1 > 50 # Output: array([ True,  True,  True, False,  True])
+array1[array1 > 50] # Output: array of elements in array1 that are greater than 50, e.g., array([83, 53, 70, 60])
+
+# Matrix: Operations -> z-score normalization
+matrix7 = np.array([1, 2, 3, 4, 5])
+mean = matrix7.mean() # Mean of the matrix, Output: 3.0  
+std = matrix7.std() # Standard deviation of the matrix, Output: 1.4142135623730951
+z_score = (matrix7 - mean) / std # Z-score normalization, Output: array([-1.41421356, -0.70710678,  0.        ,  0.70710678,  1.41421356])
+
+# Matrix: Operations -> Math Equations
+# Example: Solving a system of linear equations
+# 2x + 3y = 5
+# 4x + 5y = 6
+A = np.array([[2, 3], [4, 5]]) # Coefficient matrix
+B = np.array([5, 6]) # Constant matrix
+
+solution = np.linalg.solve(A, B) # Output: array([-1., 3.])
