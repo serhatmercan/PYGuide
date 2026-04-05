@@ -116,3 +116,7 @@ A = np.array([[2, 3], [4, 5]]) # Coefficient matrix
 B = np.array([5, 6]) # Constant matrix
 
 solution = np.linalg.solve(A, B) # Output: array([-1., 3.])
+
+# Matrix: Operations -> Linspace
+# Linspace is used to create an array of evenly spaced values between a specified start and end point.
+np_linspace = np.linspace(0, 10, 5) # Output: array([ 0., 2.5, 5., 7.5, 10.])
