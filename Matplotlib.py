@@ -15,6 +15,9 @@ plt.xlabel("Age")
 plt.ylabel("Weight")
 plt.title("Age vs Weight")
 
+# Adding a grid to the plot for better visibility of data points
+plt.grid(True) 
+
 # Displaying the plot
 plt.show()
 
