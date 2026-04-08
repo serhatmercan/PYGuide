@@ -17,8 +17,17 @@ tips.corr(numeric_only=True)
 # tip         0.675734  1.000000  0.489299
 # size        0.598315  0.489299  1.000000  
 
+# Check for duplicate values in the "smoker" column
+tips["smoker"].duplicated().sum() # Output: 0 (This indicates that there are no duplicate values in the "smoker" column)
+
 # Display the unique values in the "sex" column
 tips["sex"].unique() # Output: array(['Male', 'Female'], dtype=object)
+
+# Count the occurrences of each unique value in the "tip" column
+tips["tip"].value_counts() 
+# Output: 2.00     14
+# 3.00     13
+# 1.00     11
 
 # Set the style of the plot
 sns.set_style("whitegrid") # Styles can be "darkgrid", "whitegrid", "dark", "white", and "ticks"
