@@ -140,6 +140,9 @@ new_df.drop("Chemistry", axis=1, inplace=True)
 # Charlie  12       34       56
 # David    78       95       12
 
+# Drop duplicate values in the "Math" column, keeping only the first occurrence
+new_df = new_df.drop_duplicates(subset='Math', keep='first') # Output: DataFrame with duplicate values in the "Math" column removed
+
 # Conditional selection in a DataFrame
 new_df[new_df["Math"] > 50] 
 # Output: DataFrame with rows where Math score is greater than 50, e.g.,
@@ -337,6 +340,9 @@ excel_na_df.drop("Paris", axis=1) # Output: DataFrame with the "Paris" column re
 # 7        20        15         14
 # 8        22        16         16
 
+# Removing a specific row from the DataFrame with missing values
+excel_na_df.drop(excel_na_df.index[20]) # Output: DataFrame with the row at index 20 removed
+
 # Removing rows with NaN values from the DataFrame
 excel_na_df.dropna() # Output: DataFrame with rows containing NaN values removed, e.g.,
 #    Istanbul  New York  Amsterdam  Paris
@@ -528,3 +534,15 @@ csv_df["Formatted_Name"] = csv_df["Employee"].apply(lambda x: x.replace("_", " "
 # 3       Sales    Emp_4  110077           13  San Francisco        High                   5          7.5       Emp 4
 # 4       Sales    Emp_5   65920           1       New York         Medium                 3          3.0       Emp 5
 # 5          IT    Emp_6   97121           11        Chicago        High                   4          6.0       Emp 6
+
+# Displaying the count of numeric values in the 'X' column of the DataFrame
+csv_df['X'].str.isnumeric().sum() # Output: Count of numeric values in the 'X' column, e.g., 10
+
+# ~ operator is used to negate the boolean values returned by str.isnumeric() to filter out non-numeric values in the 'X' column of the DataFrame
+csv_df[~csv_df['X'].str.isnumeric()]['X'] # Output: Series containing non-numeric values in the 'X' column
+
+# str.replace method is used to replace occurrences of "M" with "000" in the 'X' column of the DataFrame, effectively converting values like "5M" to "5000"
+csv_df["X"] = csv_df["X"].str.replace("M", "000") # Output: DataFrame with the 'X' column updated by replacing "M" with "000", e.g.,
+
+# astype method is used to convert the data type of the 'X' column to numeric, with errors='coerce' to convert non-numeric values to NaN
+csv_df['X'] = csv_df['X'].astype(int, errors='coerce') # Output: DataFrame with the 'X' column converted to numeric data type, with non-numeric values replaced by NaN
