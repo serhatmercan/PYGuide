@@ -169,6 +169,9 @@ new_df.set_index(new_indices, inplace=True)
 # Student3 Charlie    12       34       56
 # Student4   David    78       95       12
 
+# Setting display options for floating-point numbers in Pandas
+new_df.set_option('display.float_format', '{:.4f}'.format)
+
 # Multi Indexing in a DataFrame
 first_index = ["Group1", "Group1", "Group2", "Group2"]
 inner_index = ["Alice", "Bob", "Charlie", "David"]
