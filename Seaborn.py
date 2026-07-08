@@ -64,5 +64,12 @@ plt.xlabel("Total Bill") # Set the x-axis label
 plt.ylabel("Tip") # Set the y-axis label
 plt.title("Total Bill vs Tip") # Set the title of the plot
 
+# Create a histogram with KDE
+df = sns.load_dataset("tips") # Load the tips dataset again for histogram plotting
+col = "total_bill" # Specify the column to plot
+ax = plt.gca() # Get the current axes for plotting
+
+sns.histplot(data=df, x=col, kde=True, ax=ax, bins=30)
+
 # Display the plot
 plt.show()

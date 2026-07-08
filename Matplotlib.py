@@ -99,3 +99,5 @@ ax.plot(data1, data2, linewidth=2) # Plotting data1 vs data2 with a specific lin
 ax.plot(data1, data2, marker="o", markersize=8, markerfacecolor="red", markeredgecolor="black") # Plotting data1 vs data2 with specific markers (e.g., "o" for circles, "s" for squares, "^" for triangles), marker size, marker face color, and marker edge color
 
 plt.show() # Displaying the styled plot
+
+plt.tight_layout() # Adjusting the layout of the plot to prevent overlapping of elements and ensure that all labels, titles, and legends are properly displayed within the figure area
