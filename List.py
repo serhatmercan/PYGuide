@@ -4,14 +4,14 @@ my_list = list() # Output: []
 # Defining a list
 my_list = [10, 20, 30, 40, 50]
 
-# Types
+# === Types ===
 type(my_list) # Output: <class 'list'>
 
 # Accessing elements in a list with indexing
 my_list[0] # Output: 10
 my_list[-1] # Output: 50
 
-# Comprehension: 
+# === Comprehension ===
 squared_list = [x**2 for x in my_list] # Output: [100, 400, 900, 1600, 2500]
 
 # Concatenating two lists
@@ -19,7 +19,7 @@ list1 = [1, 2, 3]
 list2 = [4, 5, 6]
 list3 = list1 + list2 # Output: [1, 2, 3, 4, 5, 6]
 
-# Methods:
+# === Methods ===
 # Modifying an element in a list
 my_list.append(60) # Output: [10, 20, 30, 40, 50, 60]
 

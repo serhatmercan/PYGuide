@@ -1,4 +1,4 @@
-import pandas as pd
+import seaborn as sns
 
 # Break and Continue in For Loop
 my_number_list = [1, 2, 3, 4, 5]
@@ -16,11 +16,19 @@ for number in my_number_list:
     print(f"Current number: {number}")    
     
     
-# For Loop in DataFrame 
-df = pd.read_csv('abc.csv') # Assuming df is a DataFrame loaded from a CSV file
+# For Loop in DataFrame
+df = sns.load_dataset("titanic")
 
-x_columns = [feature for feature in df.columns if df[feature].dtype == 'str'] # Output: List of column names in the DataFrame that have a data type of string (categorical columns)
-y_columns = [feature for feature in df.columns if df[feature].dtype in ['int64', 'float64']] # Output: List of column names in the DataFrame that have a data type of int64 or float64 (numeric columns)    
+# Behaviour varies by version: pandas 3.x gives text columns a dedicated
+# 'str' dtype, so this comparison finds them directly. On older pandas
+# (where text columns are dtype 'object') use the portable check below instead.
+x_columns = [feature for feature in df.columns if df[feature].dtype == 'str']
+# Output: ['sex', 'embarked', 'who', 'embark_town', 'alive']
+
+x_columns_portable = [feature for feature in df.columns if df[feature].dtype in ('object', 'str')]
+
+y_columns = [feature for feature in df.columns if df[feature].dtype in ['int64', 'float64']]
+# Output: ['survived', 'pclass', 'age', 'sibsp', 'parch', 'fare']
 
 # For Loop in Dictionary
 my_number_dict = {"a": 1, "b": 2, "c": 3}
