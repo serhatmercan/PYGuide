@@ -1,0 +1,21 @@
+# Third-party libraries imported across the .py files in this repository.
+# Unpinned by design (see README) - install whatever recent version you like.
+#
+# Output comments marked "verified by execution" were checked against these
+# exact versions. Where a result is known to depend on the version (dtype
+# names, repr formatting, sort order, etc.), the comment says so explicitly
+# instead of presenting a fixed value.
+#
+#   pandas            3.0.2
+#   numpy             2.4.2
+#   matplotlib        3.10.8
+#   seaborn           0.13.2
+#   scikit-learn      1.8.0
+#   imbalanced-learn  0.14.1
+
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+imbalanced-learn

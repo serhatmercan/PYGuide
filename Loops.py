@@ -17,6 +17,9 @@ for number in my_number_list:
     
     
 # For Loop in DataFrame
+# Originally written against a local CSV that wasn't checked into the repo;
+# swapped to the seaborn titanic dataset (approved 2026-08-09) so this file
+# is self-contained.
 df = sns.load_dataset("titanic")
 
 # Behaviour varies by version: pandas 3.x gives text columns a dedicated
