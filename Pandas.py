@@ -1,7 +1,8 @@
 import numpy as np
 import pandas as pd
 
-# Series: A one-dimensional labeled array capable of holding any data type.
+# === Series ===
+# A one-dimensional labeled array capable of holding any data type.
 
 # Creating a Series from a dictionary
 grades = {"Math": 90, "Science": 85, "English": 88}
@@ -39,14 +40,19 @@ contest_result_1 + contest_result_2
 # dtype: int64    
 
 # Adding two Series together with different indices
+# pandas aligns on the union of both indices, so "Mike" (only in contest_result_3)
+# and "Bob" (only in contest_result_1) both appear, with NaN where one side is missing;
+# the presence of NaN forces the result to float64 even though both inputs are int64
 contest_result_1 + contest_result_3
 # Output:
-# Alice      160
-# Bob        NaN
-# Charlie    170
-# dtype: int64
+# Alice      160.0
+# Bob          NaN
+# Charlie    170.0
+# Mike         NaN
+# dtype: float64
 
-# DataFrame: A two-dimensional labeled data structure with columns of potentially different types.
+# === DataFrame ===
+# A two-dimensional labeled data structure with columns of potentially different types.
 
 # Creating a DataFrame from a 2D array
 data = np.random.randint(1, 100, (4, 3 )) # Output: 4x3 array of random integers between 1 and 99, e.g., array([[83, 53, 70], [44, 60, 89], [12, 34, 56], [78, 90, 12]])
@@ -160,8 +166,11 @@ new_df.reset_index(inplace=True)
 # 3    David    78       95       12
 
 # Setting a new index for the DataFrame
+# set_index() expects column names or array-likes distinguishable from column
+# names; a plain list of new label values is ambiguous with a list of column
+# names and raises KeyError. Assign to .index directly instead.
 new_indices = ["Student1", "Student2", "Student3", "Student4"]
-new_df.set_index(new_indices, inplace=True)
+new_df.index = new_indices
 # Output: DataFrame with the new index set to "Student1", "Student2", "Student3", "Student4", e.g.,
 #           index  Math  Science  English
 # Student1  Alice    83       53       70
@@ -170,7 +179,8 @@ new_df.set_index(new_indices, inplace=True)
 # Student4   David    78       95       12
 
 # Setting display options for floating-point numbers in Pandas
-new_df.set_option('display.float_format', '{:.4f}'.format)
+# set_option is a top-level pandas function, not a DataFrame method
+pd.set_option('display.float_format', '{:.4f}'.format)
 
 # Multi Indexing in a DataFrame
 first_index = ["Group1", "Group1", "Group2", "Group2"]
@@ -199,8 +209,9 @@ multi_index_df.loc["Group1"].loc["Alice"]
 # Value1    1.0
 # Value2    1.0
 
+# === Excel Files ===
 # Reading data from an Excel file into a DataFrame
-excel_df = pd.read_excel('excel.xlsx')
+excel_df = pd.read_excel('data/city_temperatures.xlsx')
 # Output: DataFrame containing the data from the Excel file, e.g.,
 #       Istanbul  New York  Amsterdam  Paris
 # 0        20        10         15     12
@@ -232,8 +243,11 @@ excel_df.tail() # Output: Last 5 rows of the DataFrame, e.g.,
 # 7        20        15         14     14
 
 # Display the info and summary statistics of the DataFrame
+# Behaviour varies by version: the class path in the first line and the exact
+# memory usage figure both depend on the pandas version - shown here as this
+# environment (pandas 3.0.2) reports them.
 excel_df.info() # Output: Information about the DataFrame, e.g.,
-# <class 'pandas.core.frame.DataFrame'>
+# <class 'pandas.DataFrame'>
 # RangeIndex: 9 entries, 0 to 8
 # Data columns (total 4 columns):
 #  #   Column     Non-Null Count  Dtype
@@ -243,19 +257,19 @@ excel_df.info() # Output: Information about the DataFrame, e.g.,
 #  2   Amsterdam  9 non-null      int64
 #  3   Paris      9 non-null      int64
 # dtypes: int64(4)
-# memory usage: 416.0 bytes
+# memory usage: 420.0 bytes
 
 # Displaying summary statistics of the DataFrame
-excel_df.describe() # Output: Summary statistics of the DataFrame, e.g.,
-#         Istanbul  New York    Amsterdam  Paris
-# count   9.000000   9.000000   9.000000    9.000000
-# mean   21.666667  13.444444   17.000000  15.555556
-# std     3.162278   1.966287    2.449490   2.449490
-# min    15.000000  10.000000   14.000000  12.000000
-# 25%    20.000000  12.000000   15.000000  14.000000
-# 50%    21.000000  13.000000   17.000000  15.000000   
-# 75%    22.000000  15.000000   18.000000  16.000000
-# max    28.000000  16.000000   22.000000  20.000000
+excel_df.describe() # Output: Summary statistics of the DataFrame
+#         Istanbul   New York  Amsterdam      Paris
+# count   9.000000   9.000000   9.000000   9.000000
+# mean   21.444444  13.111111  16.777778  15.555556
+# std     3.609401   2.147350   2.538591   2.351123
+# min    15.000000  10.000000  14.000000  12.000000
+# 25%    20.000000  12.000000  15.000000  14.000000
+# 50%    21.000000  13.000000  16.000000  15.000000
+# 75%    22.000000  15.000000  18.000000  16.000000
+# max    28.000000  16.000000  22.000000  20.000000
 
 # Displaying the count of non-null values in each column of the DataFrame
 excel_df.count() # Output: Count of non-null values in each column, e.g.,
@@ -266,18 +280,20 @@ excel_df.count() # Output: Count of non-null values in each column, e.g.,
 # dtype: int64
 
 # Display the number of missing values in each column of the DataFrame
-excel_df.isna() # Output: DataFrame indicating the presence of NaN values, e.g.,
-#      Istanbul  New York   Amsterdam   Paris
-# 0     False      False      False     False
-# 1     False      False      False     False
-# 2     False      False      False     False
-# 3     False      False      False     False
-# 4     False      False      False     False  
-# 5     False      False      False     False
-# 6     False      False      False     False
+excel_df.isna() # Output: DataFrame indicating the presence of NaN values (none here)
+#    Istanbul  New York  Amsterdam  Paris
+# 0     False     False      False  False
+# 1     False     False      False  False
+# 2     False     False      False  False
+# 3     False     False      False  False
+# 4     False     False      False  False
+# 5     False     False      False  False
+# 6     False     False      False  False
+# 7     False     False      False  False
+# 8     False     False      False  False
 
 # Reading data from an Excel file into a DataFrame with missing values
-excel_na_df = pd.read_excel('excel_na.xlsx') # Output: DataFrame containing the data from the Excel file with missing values, e.g.,
+excel_na_df = pd.read_excel('data/city_temperatures_missing.xlsx') # Output: DataFrame containing the data from the Excel file with missing values, e.g.,
 #       Istanbul  New York  Amsterdam  Paris
 # 0      20.0      10.0       15.0   12.0
 # 1      21.0      10.0        NaN   14.0
@@ -347,12 +363,14 @@ excel_na_df.drop("Paris", axis=1) # Output: DataFrame with the "Paris" column re
 excel_na_df.drop(excel_na_df.index[2]) # Output: DataFrame with the row at index 2 removed
 
 # Removing rows with NaN values from the DataFrame
-excel_na_df.dropna() # Output: DataFrame with rows containing NaN values removed, e.g.,
+# The original row index is preserved (rows are dropped, not renumbered),
+# so only rows 0, 3, 4, and 6 remain - the ones with no NaN in any column
+excel_na_df.dropna() # Output: DataFrame with rows containing NaN values removed
 #    Istanbul  New York  Amsterdam  Paris
-# 0        20        10         15   12.0
-# 1        21        10         17   14.0
-# 2        20        13         18   15.0
-# 3        22        14         19   18.0
+# 0      20.0      10.0       15.0   12.0
+# 3      22.0      14.0       19.0   18.0
+# 4      25.0      15.0       15.0   20.0
+# 6      15.0      12.0       15.0   15.0
 
 # Filling NaN values in the DataFrame with a specific value
 excel_na_df.fillna(20) # Output: DataFrame with NaN values filled with 20, e.g.,
@@ -368,20 +386,21 @@ excel_na_df.fillna(20) # Output: DataFrame with NaN values filled with 20, e.g.,
 # 8        22        16         16   20.0
 
 # Filling NaN values in the DataFrame with the mean of each column
-excel_na_df.fillna(excel_na_df.mean()) # Output: DataFrame with NaN values filled with the mean of each column, e.g.,
-#    Istanbul    New York   Amsterdam  Paris
-# 0  20.000000  10.000000   15.000000  12.000000
-# 1  21.000000  10.000000   17.000000  14.000000
-# 2  20.000000  13.000000   18.000000  15.000000
-# 3  22.000000  14.000000   19.000000  18.000000
-# 4  25.000000  15.000000   15.000000  20.000000
-# 5  28.000000  13.000000   22.000000  15.555556
-# 6  15.000000  12.000000   15.000000  15.000000
-# 7  20.000000  15.000000   14.000000  15.555556
-# 8  22.000000  16.000000   16.000000  15.555556
+excel_na_df.fillna(excel_na_df.mean()) # Output: DataFrame with NaN values filled with the mean of each column
+#    Istanbul  New York  Amsterdam      Paris
+# 0    20.000    10.000      15.00  12.000000
+# 1    21.000    10.000      16.75  14.000000
+# 2    21.625    13.000      18.00  15.000000
+# 3    22.000    14.000      19.00  18.000000
+# 4    25.000    15.000      15.00  20.000000
+# 5    28.000    13.125      22.00  15.666667
+# 6    15.000    12.000      15.00  15.000000
+# 7    20.000    15.000      14.00  15.666667
+# 8    22.000    16.000      16.00  15.666667
 
+# === CSV Files ===
 # Reading data from a CSV file into a DataFrame
-csv_df = pd.read_csv('csv_df.csv') # Output: DataFrame containing the data from the CSV file, e.g.,
+csv_df = pd.read_csv('data/employees.csv') # Output: DataFrame containing the data from the CSV file, e.g.,
 #    Department Employee  Salary  Experience           City
 # 0   Marketing    Emp_1   53483           1       New York
 # 1       Sales    Emp_2   78555           8         Austin
@@ -435,7 +454,6 @@ csv_df = pd.read_csv('csv_df.csv') # Output: DataFrame containing the data from 
 # 49  Marketing   Emp_50  117538           4       New York
 
 csv_df.describe() # Output: Summary statistics of the DataFrame, e.g.,
-# Output: Summary statistics of the DataFrame, e.g.,
 #              Salary  Experience
 # count      50.000000   50.000000
 # mean    78344.500000    7.060000
@@ -453,47 +471,87 @@ csv_df[['Salary', 'Experience']].mean() # Output: Mean of the "Salary" and "Expe
 # Salary        78344.5
 # Experience    7.06
 
-# Experience greater than 5 
-csv_df[csv_df['Experience'] > 5].count() # Output: Count of non-null values in each column for rows where Experience is greater than 5, e.g.,
-# Department    28
-# Employee      28
-# Salary        28
-# Experience    28
-# City          28
+# Experience greater than 5
+csv_df[csv_df['Experience'] > 5].count() # Output: Count of non-null values in each column for rows where Experience is greater than 5
+# Department           31
+# Employee             31
+# Salary               31
+# Experience           31
+# City                 31
+# Performance_Score    31
+# dtype: int64
 
 # Grouping the DataFrame by the "Department" column
 csv_df_department_grouped = csv_df.groupby('Department') # Output: DataFrameGroupBy object grouped by the "Department" column
 
 # Displaying the count of non-null values in each column for each department
-csv_df_department_grouped.count() # Output: Count of non-null values in each column for each department, e.g.,
-#              Employee  Salary  Experience  City
+csv_df_department_grouped.count() # Output: Count of non-null values in each column for each department
+#             Employee  Salary  Experience  City  Performance_Score
 # Department
-# HR              6       6           6     6
-# IT              8       8           8     8
-# Finance         9       9           9     9
-# Marketing       10      10          10    10
-# Sales           17      17          17    17
+# Finance           10      10          10    10                 10
+# HR                 7       7           7     7                  7
+# IT                10      10          10    10                 10
+# Marketing         13      13          13    13                 13
+# Sales             10      10          10    10                 10
 
-# Concatenating two DataFrames vertically (stacking them on top of each other)
-csv_df_1 = pd.read_csv('csv_df_1.csv')
-csv_df_2 = pd.read_csv('csv_df_2.csv')
+# === Concatenation & Merging ===
+# csv_df_1 has Employee_ID 1-4, csv_df_2 has Employee_ID 2-5, so IDs 1 and 5
+# each appear in only one file - deliberately, to show how each join type
+# handles rows that don't have a match on the other side.
+csv_df_1 = pd.read_csv('data/employees_1.csv')
+csv_df_2 = pd.read_csv('data/employees_2.csv')
 
 # Concatenating the two DataFrames while ignoring the index to create a new DataFrame with a continuous index
-df_concat = pd.concat([csv_df_1, csv_df_2], ignore_index=True) # Output: DataFrame resulting from concatenating csv_df_1 and csv_df_2
+df_concat = pd.concat([csv_df_1, csv_df_2], ignore_index=True)
+# Output:
+#    Employee_ID Employee Department    Salary  Experience
+# 0            1    Emp_1  Marketing       NaN         NaN
+# 1            2    Emp_2      Sales       NaN         NaN
+# 2            3    Emp_3    Finance       NaN         NaN
+# 3            4    Emp_4      Sales       NaN         NaN
+# 4            2      NaN        NaN   78555.0         8.0
+# 5            3      NaN        NaN   47159.0         3.0
+# 6            4      NaN        NaN  110077.0         3.0
+# 7            5      NaN        NaN   65920.0         1.0
 
 # Merging two DataFrames based on a common column using an inner join to create a new DataFrame that includes only the rows with matching values in the "Employee_ID" column
-df_merged = pd.merge(csv_df_1, csv_df_2, on="Employee_ID", how="inner") # Output: DataFrame resulting from merging csv_df_1 and csv_df_2 on the "Employee_ID" column
+df_merged = pd.merge(csv_df_1, csv_df_2, on="Employee_ID", how="inner")
+# Output: (only IDs 2, 3, 4 match on both sides)
+#    Employee_ID Employee Department  Salary  Experience
+# 0            2    Emp_2      Sales   78555           8
+# 1            3    Emp_3    Finance   47159           3
+# 2            4    Emp_4      Sales  110077           3
 
 # Merging two DataFrames based on a common column using an outer join to include all rows from both DataFrames
-df_merged = pd.merge(csv_df_1, csv_df_2, on="Employee_ID", how="outer") # Output: DataFrame resulting from merging csv_df_1 and csv_df_2 on the "Employee_ID" column using an outer join
+df_merged = pd.merge(csv_df_1, csv_df_2, on="Employee_ID", how="outer")
+# Output: (ID 1 has no Salary/Experience, ID 5 has no Employee/Department)
+#    Employee_ID Employee Department    Salary  Experience
+# 0            1    Emp_1  Marketing       NaN         NaN
+# 1            2    Emp_2      Sales   78555.0         8.0
+# 2            3    Emp_3    Finance   47159.0         3.0
+# 3            4    Emp_4      Sales  110077.0         3.0
+# 4            5      NaN        NaN   65920.0         1.0
 
 # Merging two DataFrames based on a common column using a left join to include all rows from the left DataFrame (csv_df_1) and matching rows from the right DataFrame (csv_df_2)
-df_merged = pd.merge(csv_df_1, csv_df_2, on="Employee_ID", how="left") # Output: DataFrame resulting from merging csv_df_1 and csv_df_2 on the "Employee_ID" column using a left join
+df_merged = pd.merge(csv_df_1, csv_df_2, on="Employee_ID", how="left")
+# Output: (every row from csv_df_1; ID 1 has no Salary/Experience match)
+#    Employee_ID Employee Department    Salary  Experience
+# 0            1    Emp_1  Marketing       NaN         NaN
+# 1            2    Emp_2      Sales   78555.0         8.0
+# 2            3    Emp_3    Finance   47159.0         3.0
+# 3            4    Emp_4      Sales  110077.0         3.0
 
 # Merging two DataFrames based on a common column using a right join to include all rows from the right DataFrame (csv_df_2) and matching rows from the left DataFrame (csv_df_1)
-df_merged = pd.merge(csv_df_1, csv_df_2, on="Employee_ID", how="right") # Output: DataFrame resulting from merging csv_df_1 and csv_df_2 on the "Employee_ID" column using a right join
+df_merged = pd.merge(csv_df_1, csv_df_2, on="Employee_ID", how="right")
+# Output: (every row from csv_df_2; ID 5 has no Employee/Department match)
+#    Employee_ID Employee Department  Salary  Experience
+# 0            2    Emp_2      Sales   78555           8
+# 1            3    Emp_3    Finance   47159           3
+# 2            4    Emp_4      Sales  110077           3
+# 3            5      NaN        NaN   65920           1
 
-# Apply: Defining a function to categorize salaries as "Low", "Medium", or "High" based on the salary amount
+# === Apply ===
+# Defining a function to categorize salaries as "Low", "Medium", or "High" based on the salary amount
 def salary_status(salary):
     if salary < 50000:
         return "Low"
@@ -507,10 +565,10 @@ csv_df['Salary_Status'] = csv_df['Salary'].apply(salary_status) # Output: DataFr
 #    Department Employee  Salary  Experience           City Salary_Status
 # 0   Marketing    Emp_1   53483           1       New York         Medium
 # 1       Sales    Emp_2   78555           8         Austin         Medium
-# 2     Finance    Emp_3   47159           3         Austin         Medium
+# 2     Finance    Emp_3   47159           3         Austin            Low
 # 3       Sales    Emp_4  110077           3  San Francisco         High
 # 4       Sales    Emp_5   65920           1       New York         Medium
-# 5          IT    Emp_6   97121          11        Chicago         High
+# 5          IT    Emp_6   97121          11        Chicago         Medium
 
 # Apply: Defining a function to calculate an extra bonus based on the performance score and experience of an employee
 def performance_extra_bonus(row):
@@ -524,28 +582,68 @@ csv_df['Extra_Bonus'] = csv_df.apply(performance_extra_bonus, axis=1) # Output: 
 #    Department Employee  Salary  Experience           City Salary_Status  Performance_Score  Extra_Bonus
 # 0   Marketing    Emp_1   53483           1       New York         Medium                 3          3.0
 # 1       Sales    Emp_2   78555           8         Austin         Medium                 4          4.0
-# 2     Finance    Emp_3   47159           3         Austin         Medium                 2          2.0
-# 3       Sales    Emp_4  110077           13  San Francisco        High                   5          7.5
+# 2     Finance    Emp_3   47159           3         Austin            Low                 2          2.0
+# 3       Sales    Emp_4  110077           3  San Francisco           High                 5          5.0
 # 4       Sales    Emp_5   65920           1       New York         Medium                 3          3.0
-# 5          IT    Emp_6   97121           11        Chicago        High                   4          6.0
+# 5          IT    Emp_6   97121          11        Chicago         Medium                 4          6.0
 
 csv_df["Formatted_Name"] = csv_df["Employee"].apply(lambda x: x.replace("_", " ")) # Output: DataFrame with a new column "Formatted_Name" that contains the employee names with underscores replaced by spaces, e.g.,
 #    Department Employee  Salary  Experience           City Salary_Status  Performance_Score  Extra_Bonus Formatted_Name
 # 0   Marketing    Emp_1   53483           1       New York         Medium                 3          3.0       Emp 1
 # 1       Sales    Emp_2   78555           8         Austin         Medium                 4          4.0       Emp 2
-# 2     Finance    Emp_3   47159           3         Austin         Medium                 2          2.0       Emp 3    
-# 3       Sales    Emp_4  110077           13  San Francisco        High                   5          7.5       Emp 4
+# 2     Finance    Emp_3   47159           3         Austin            Low                 2          2.0       Emp 3
+# 3       Sales    Emp_4  110077           3  San Francisco           High                 5          5.0       Emp 4
 # 4       Sales    Emp_5   65920           1       New York         Medium                 3          3.0       Emp 5
-# 5          IT    Emp_6   97121           11        Chicago        High                   4          6.0       Emp 6
+# 5          IT    Emp_6   97121          11        Chicago         Medium                 4          6.0       Emp 6
 
-# Displaying the count of numeric values in the 'X' column of the DataFrame
-csv_df['X'].str.isnumeric().sum() # Output: Count of numeric values in the 'X' column, e.g., 10
+# === Cleaning a Mixed Numeric/Text Column ===
+# 'X' isn't a real column in csv_df - it's illustrative data built locally for
+# this example, showing how to clean a column that mixes plain numbers with
+# shorthand like "5M" (5 million) before converting it to a numeric dtype.
+x_series = pd.Series(["120", "5M", "340", "2M", "75", "1M", "980", "3M", "60", "410"])
 
-# ~ operator is used to negate the boolean values returned by str.isnumeric() to filter out non-numeric values in the 'X' column of the DataFrame
-csv_df[~csv_df['X'].str.isnumeric()]['X'] # Output: Series containing non-numeric values in the 'X' column
+# Displaying the count of numeric-only values in the 'X' column
+x_series.str.isnumeric().sum() # Output: 6
 
-# str.replace method is used to replace occurrences of "M" with "000" in the 'X' column of the DataFrame, effectively converting values like "5M" to "5000"
-csv_df["X"] = csv_df["X"].str.replace("M", "000") # Output: DataFrame with the 'X' column updated by replacing "M" with "000", e.g.,
+# ~ operator negates the boolean mask from str.isnumeric() to select the non-numeric values
+x_series[~x_series.str.isnumeric()]
+# Output:
+# 1    5M
+# 3    2M
+# 5    1M
+# 7    3M
+# dtype: str
+# Behaviour varies by version: pandas 3.x gives string Series a dedicated
+# 'str' dtype; on older pandas this reads dtype: object instead.
 
-# astype method is used to convert the data type of the 'X' column to numeric, with errors='coerce' to convert non-numeric values to NaN
-csv_df['X'] = csv_df['X'].astype(int, errors='coerce') # Output: DataFrame with the 'X' column converted to numeric data type, with non-numeric values replaced by NaN
+# str.replace converts values like "5M" to "5000"
+x_series = x_series.str.replace("M", "000")
+# Output:
+# 0     120
+# 1    5000
+# 2     340
+# 3    2000
+# 4      75
+# 5    1000
+# 6     980
+# 7    3000
+# 8      60
+# 9     410
+# dtype: str
+
+# .astype only accepts errors='raise' or errors='ignore' - it has no 'coerce'
+# option. To turn any leftover non-numeric values into NaN, use
+# pd.to_numeric(..., errors='coerce') instead.
+x_series = pd.to_numeric(x_series, errors='coerce')
+# Output:
+# 0     120
+# 1    5000
+# 2     340
+# 3    2000
+# 4      75
+# 5    1000
+# 6     980
+# 7    3000
+# 8      60
+# 9     410
+# dtype: int64

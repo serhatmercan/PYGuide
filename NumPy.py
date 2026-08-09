@@ -1,5 +1,11 @@
 import numpy as np
 
+# Behaviour varies by version: NumPy 2.0+ auto-displays single-value results
+# (in a REPL or notebook) as np.int64(5) / np.float64(3.0) instead of the
+# plain 5 / 3.0 that print() and NumPy <2.0 show. Every "Output:" below for
+# a single-value result gives the plain form; array-valued outputs are
+# unaffected and unchanged across versions.
+
 my_list = [1, 2, 3, 4, 5]
 my_array = np.array(my_list)
 
@@ -12,11 +18,11 @@ my_array.min()  # Output: 1
 # Sum of all elements in the array
 my_array.sum()  # Output: 15
 
-# Array Methods
+# === Array Methods ===
 np.zeros(5)  # Output: array([0., 0., 0., 0., 0.])
 np.ones(5)   # Output: array([1., 1., 1., 1., 1.])
 
-# Random numbers
+# === Random Numbers ===
 np.random.random(5) # Output: array of 5 random numbers between 0 and 1, e.g., array([0.5488135 , 0.71518937, 0.60276338, 0.54488318, 0.4236548 ])
 np.random.rand(5)  # Output: array of 5 random numbers between 0 and 1, e.g., array([0.5488135 , 0.71518937, 0.60276338, 0.54488318, 0.4236548 ])
 np.random.rand(3,3) # Output: 3x3 array of random numbers between 0 and 1, e.g., array([[0.5488135 , 0.71518937, 0.60276338], [0.54488318, 0.4236548 , 0.64589411], [0.43758721, 0.891773 , 0.96366276]])
@@ -40,7 +46,7 @@ np_array[:3] # Output: array([0, 2, 4])
 np_array[::2] # Output: array([0, 4, 8])
 np_array[1:2:3] # Output: array([2])
 
-# Arithmetic Operations
+# === Arithmetic Operations ===
 my_list1 = [1, 2, 3, 4, 5]
 my_list2 = [10, 20, 30, 40, 50]
 
@@ -60,7 +66,7 @@ my_array1 * 2  # Output: array([ 2,  4,  6,  8, 10])
 # AO: Division
 my_array2 / my_array1  # Output: array([10., 10., 10., 10., 10.])
 
-# Matrix
+# === Matrix ===
 matrix1 = np.array([[1, 2], [3, 4]])
 matrix2 = np.array([[5, 6], [7, 8]])
 matrix3 = np.array([5, 6])
@@ -78,7 +84,7 @@ matrix1.sum() # Output: 10
 # Matrix: Element-wise addition of two matrices
 matrix1 + matrix2 # Output: array([[6, 8], [10, 12]])
 matrix1 + matrix3 # Output: array([[6, 8], [8, 10]])
-matrix1 + matrix4 # Output: array([[8, 9], [10, 11]])
+matrix1 + matrix4 # Output: array([[8, 9], [11, 12]])
 
 # Matrix: Dot product of two matrices
 matrix5 = np.array([[1, 2, 3], [4, 5, 6]])
@@ -115,7 +121,7 @@ z_score = (matrix7 - mean) / std # Z-score normalization, Output: array([-1.4142
 A = np.array([[2, 3], [4, 5]]) # Coefficient matrix
 B = np.array([5, 6]) # Constant matrix
 
-solution = np.linalg.solve(A, B) # Output: array([-1., 3.])
+solution = np.linalg.solve(A, B) # Output: array([-3.5, 4.])
 
 # Matrix: Operations -> Linspace
 # Linspace is used to create an array of evenly spaced values between a specified start and end point.
