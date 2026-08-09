@@ -7,6 +7,10 @@ import seaborn as sns
 df = sns.load_dataset("tips")
 
 # Independent and Dependent Features
+# Predicting tip amount from total bill amount - this pairing was my choice
+# when swapping datasets; the original file predicted "Exam Score" from
+# "Study Hours" on a CSV that never existed in the repo, so there's no
+# original variable relationship to preserve here.
 X = df[['total_bill']]
 y = df['tip']
 
