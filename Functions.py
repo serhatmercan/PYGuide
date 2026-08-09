@@ -3,7 +3,7 @@ def greet(name, surname="Mercan"):
     print(f"Hello, {name} {surname}! Welcome to Python programming.")
 
 greet("John") # Output: Hello, John Mercan! Welcome to Python programming.
-greet("Alice", "Smith") # Output: Hello, Alice Smith! Welcome to Python
+greet("Alice", "Smith") # Output: Hello, Alice Smith! Welcome to Python programming.
 
 # Define a function that takes two numbers as input and returns their sum.
 def add_numbers(num1, num2):

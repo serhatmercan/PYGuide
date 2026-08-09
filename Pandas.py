@@ -344,7 +344,7 @@ excel_na_df.drop("Paris", axis=1) # Output: DataFrame with the "Paris" column re
 # 8        22        16         16
 
 # Removing a specific row from the DataFrame with missing values
-excel_na_df.drop(excel_na_df.index[20]) # Output: DataFrame with the row at index 20 removed
+excel_na_df.drop(excel_na_df.index[2]) # Output: DataFrame with the row at index 2 removed
 
 # Removing rows with NaN values from the DataFrame
 excel_na_df.dropna() # Output: DataFrame with rows containing NaN values removed, e.g.,
