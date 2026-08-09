@@ -15,7 +15,7 @@ df.isnull().sum()
 # Drop the 'deck' column due to high number of missing values
 df.drop(columns=["deck"], inplace=True)  
 
-# Imputation: Fill missing values in 'age' with the median age
+# === Imputation ===
 # Mean Imputation
 df["age_mean"] = df["age"].fillna(df["age"].mean()) # Fill missing values in 'age' with the mean age
 

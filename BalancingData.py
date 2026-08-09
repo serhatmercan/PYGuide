@@ -1,7 +1,7 @@
 from imblearn.over_sampling import SMOTE
 import numpy as np
 import pandas as pd
-import sklearn.utils as resample
+from sklearn.utils import resample
 
 # Resampling and Encoding Example
 # Create a sample imbalanced dataset
@@ -24,7 +24,7 @@ df2 = pd.DataFrame({
 # Combine the two datasets to create an imbalanced dataset
 df = pd.concat([df1, df2]).reset_index(drop=True)
  
-# Upsampling
+# === Upsampling ===
 # Increase the number of samples in the minority class
 df_minority = df[df['target'] == 1]
 df_majority = df[df['target'] == 0]
@@ -45,7 +45,7 @@ df_upsampled['target'].value_counts()
 # 0    900
 # 1    900
 
-# Downsampling
+# === Downsampling ===
 # Decrease the number of samples in the majority class
 df_majority_downsampled = resample(df_majority,                  # DataFrame containing the majority class samples
                                    replace=False,                # Sample without replacement
@@ -62,7 +62,7 @@ df_downsampled['target'].value_counts()
 # 0    100
 # 1    100
 
-# SMOTE (Synthetic Minority Over-sampling Technique)
+# === SMOTE (Synthetic Minority Over-sampling Technique) ===
 # Generate synthetic samples for the minority class
 oversample = SMOTE()
 

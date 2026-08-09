@@ -58,7 +58,8 @@ def insert_sample_data(cursor):
     print("Sample data inserted successfully.")
 
 def basic_queries(cursor):
-    # SELECT ALL = Example of a basic query to retrieve all students from the Students table
+    # === SELECT ALL ===
+    # Example of a basic query to retrieve all students from the Students table
     cursor.execute('SELECT * FROM Students') # Execute the SQL command to select all records from the Students table
     students = cursor.fetchall() # Fetch all results from the executed query
 
@@ -72,7 +73,8 @@ def basic_queries(cursor):
     # ID: 4, Name: David White, Age: 18, Email: david.white@example.com, City: Chicago
     # ID: 5, Name: Eve Davis, Age: 21, Email: eve.davis@example.com, City: San Francisco
 
-    # COLUMNS = Example of a query to select specific columns (name and email) from the Students table
+    # === COLUMNS ===
+    # Example of a query to select specific columns (name and email) from the Students table
     cursor.execute('SELECT name, email FROM Students') # Execute the SQL command to select only the name and email columns from the Students table
     students = cursor.fetchall() # Fetch all results from the executed query    
 
@@ -86,7 +88,8 @@ def basic_queries(cursor):
     # Name: David White, Email: david.white@example.com
     # Name: Eve Davis, Email: eve.davis@example.com
 
-    # LIMIT = Example of a query to select only the first 3 students from the Students table
+    # === LIMIT ===
+    # Example of a query to select only the first 3 students from the Students table
     cursor.execute('SELECT * FROM Students LIMIT 3') # Execute the SQL command to select only the first 3 records from the Students table
     students = cursor.fetchall() # Fetch all results from the executed query    
 
@@ -98,7 +101,8 @@ def basic_queries(cursor):
     # ID: 2, Name: Bob Smith, Age: 22, Email: bob.smith@example.com, City: Los Angeles
     # ID: 3, Name: Charlie Brown, Age: 19, Email: charlie.brown@example.com, City: Chicago
 
-    # ORDER BY = Example of a query to select all students from the Students table and order them by age in ascending order
+    # === ORDER BY ===
+    # Example of a query to select all students from the Students table and order them by age in ascending order
     cursor.execute('SELECT * FROM Students ORDER BY age ASC') # Execute the SQL command to select all records from the Students table and order them by age in ascending order
     students = cursor.fetchall() # Fetch all results from the executed query
 
@@ -112,7 +116,8 @@ def basic_queries(cursor):
     # ID: 5, Name: Eve Davis, Age: 21, Email: eve.davis@example.com, City: San Francisco
     # ID: 2, Name: Bob Smith, Age: 22, Email: bob.smith@example.com, City: Los Angeles
 
-    # WHERE = Example of a query to select students from the Students table where the city is 'Chicago'
+    # === WHERE ===
+    # Example of a query to select students from the Students table where the city is 'Chicago'
     cursor.execute("SELECT * FROM Students WHERE city = 'Chicago'") # Execute the SQL command to select all records from the Students table where the city is 'Chicago'
     students = cursor.fetchall() # Fetch all results from the executed query    
 
@@ -123,7 +128,8 @@ def basic_queries(cursor):
     # ID: 3, Name: Charlie Brown, Age: 19, Email: charlie.brown@example.com, City: Chicago 
     # ID: 4, Name: David White, Age: 18, Email: david.white@example.com, City: Chicago
 
-    # WHERE - NOT = Example of a query to select students from the Students table where the city is not 'Chicago'
+    # === WHERE - NOT ===
+    # Example of a query to select students from the Students table where the city is not 'Chicago'
     cursor.execute("SELECT name, city FROM Students WHERE city != 'Chicago'") # Execute the SQL command to select the name and city of all records from the Students table where the city is not 'Chicago'
     students = cursor.fetchall() # Fetch all results from the executed query
     for student in students:
@@ -134,7 +140,8 @@ def basic_queries(cursor):
     # Name: Bob Smith, City: Los Angeles
     # Name: Eve Davis, City: San Francisco
 
-    # WHERE - IN = Example of a query to select students from the Students table where the city is either 'Chicago' or 'New York'
+    # === WHERE - IN ===
+    # Example of a query to select students from the Students table where the city is either 'Chicago' or 'New York'
     cursor.execute("SELECT * FROM Students WHERE city IN ('Chicago', 'New York')") # Execute the SQL command to select all records from the Students table where the city is either 'Chicago' or 'New York'
     students = cursor.fetchall() # Fetch all results from the executed query
 
@@ -148,7 +155,8 @@ def basic_queries(cursor):
 
 
 def aggregate_functions(cursor):
-    # COUNT = Example of a query to count the number of students in the Students table
+    # === COUNT ===
+    # Example of a query to count the number of students in the Students table
     cursor.execute('SELECT COUNT(*) FROM Students') # Execute the SQL command to count the total number of records in the Students table
     count = cursor.fetchone()[0] # Fetch the result of the COUNT query and extract the count value
 
@@ -156,7 +164,8 @@ def aggregate_functions(cursor):
     # Output: Example output of the COUNT query showing the total number of students
     # Total number of students: 5
 
-    # AVG = Example of a query to calculate the average age of students in the Students table
+    # === AVG ===
+    # Example of a query to calculate the average age of students in the Students table
     cursor.execute('SELECT AVG(age) FROM Students') # Execute the SQL command to calculate the average age of students in the Students table
     average_age = cursor.fetchone()[0] # Fetch the result of the AVG query and extract the average age value
 
@@ -164,7 +173,8 @@ def aggregate_functions(cursor):
     # Output: Example output of the AVG query showing the average age of students
     # Average age of students: 20.00
 
-    # MAX = Example of a query to find the maximum age of students in the Students table
+    # === MAX ===
+    # Example of a query to find the maximum age of students in the Students table
     cursor.execute('SELECT MAX(age) FROM Students') # Execute the SQL command to find the maximum age of students in the Students table
     max_age = cursor.fetchone()[0] # Fetch the result of the MAX query and extract the maximum age value
 
@@ -172,7 +182,8 @@ def aggregate_functions(cursor):
     # Output: Example output of the MAX query showing the maximum age of students
     # Maximum age of students: 22
 
-    # MIN = Example of a query to find the minimum age of students in the Students table
+    # === MIN ===
+    # Example of a query to find the minimum age of students in the Students table
     cursor.execute('SELECT MIN(age) FROM Students') # Execute the SQL command to find the minimum age of students in the Students table
     min_age = cursor.fetchone()[0] # Fetch the result of the MIN query and extract the minimum age value
 
@@ -180,7 +191,8 @@ def aggregate_functions(cursor):
     # Output: Example output of the MIN query showing the minimum age of students
     # Minimum age of students: 18
 
-    # GROUP BY = Example of a query to count the number of students in each city using GROUP BY
+    # === GROUP BY ===
+    # Example of a query to count the number of students in each city using GROUP BY
     cursor.execute('SELECT city, COUNT(*) FROM Students GROUP BY city') # Execute the SQL command to count the number of students in each city by grouping the results by the city column
     city_counts = cursor.fetchall() # Fetch all results from the executed GROUP BY query
 
@@ -188,21 +200,25 @@ def aggregate_functions(cursor):
         print(f"City: {city_count[0]}, Number of students: {city_count[1]}") # Print each city and the corresponding number of students in a formatted string
 
     # Output: Example output of the GROUP BY query showing the number of students in each city
-    # City: New York, Number of students: 1
-    # City: Los Angeles, Number of students: 1  
+    # SQLite returns GROUP BY results sorted by the grouped column, not insertion order
     # City: Chicago, Number of students: 2
-    # City: San Francisco, Number of students: 1    
+    # City: Los Angeles, Number of students: 1
+    # City: New York, Number of students: 1
+    # City: San Francisco, Number of students: 1
 
 def crud_operations(conn, cursor):
-    # CREATE = Example of a query to insert a new student into the Students table
+    # === CREATE ===
+    # Example of a query to insert a new student into the Students table
     cursor.execute("INSERT INTO Students (name, age, email, city) VALUES ('Frank Miller', 23, 'frank.miller@example.com', 'Boston')") # Execute the SQL command to insert a new student into the Students table
     conn.commit() # Commit the changes to the database after inserting the new student
 
-    # UPDATE = Example of a query to update the age of a student in the Students table
+    # === UPDATE ===
+    # Example of a query to update the age of a student in the Students table
     cursor.execute("UPDATE Students SET age = 24 WHERE id = 6") # Execute the SQL command to update the age of the student with id 6 in the Students table 
     conn.commit() # Commit the changes to the database after updating the student's age
 
-    # DELETE = Example of a query to delete a student from the Students table
+    # === DELETE ===
+    # Example of a query to delete a student from the Students table
     cursor.execute("DELETE FROM Students WHERE id = 6") # Execute the SQL command to delete the student with id 6 from the Students table
     conn.commit() # Commit the changes to the database after deleting the student
 
