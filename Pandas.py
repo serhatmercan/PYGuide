@@ -1,6 +1,12 @@
 import numpy as np
 import pandas as pd
 
+# Behaviour varies by version: NumPy 2.0+ auto-displays a single value pulled
+# from a Series/DataFrame (e.g. indexing one cell, or .sum()/.mean() on a
+# pandas object backed by NumPy) as np.int64(5) / np.float64(3.0) in a REPL
+# or notebook, instead of the plain 5 / 3.0 that print() and NumPy <2.0 show.
+# Every "Output:" below for a single-value result gives the plain form.
+
 # === Series ===
 # A one-dimensional labeled array capable of holding any data type.
 
@@ -56,6 +62,10 @@ contest_result_1 + contest_result_3
 
 # Creating a DataFrame from a 2D array
 data = np.random.randint(1, 100, (4, 3 )) # Output: 4x3 array of random integers between 1 and 99, e.g., array([[83, 53, 70], [44, 60, 89], [12, 34, 56], [78, 90, 12]])
+# Platform-dependent: np.random.randint's default integer dtype is the C
+# "long" type, which is 32-bit on Windows (int32) and 64-bit on Linux/Mac
+# (int64) - the dtype shown on Series/DataFrames built from `data` below
+# will vary accordingly, independent of the pandas/numpy version.
 
 data_frame = pd.DataFrame(data) 
 # Output: DataFrame with 4 rows and 3 columns, e.g.,
@@ -94,7 +104,7 @@ new_df.loc["David"] # Output: Series with David's scores, e.g.,
 # Math       78
 # Science    90
 # English    12
-# Name: David, dtype: int64
+# Name: David, dtype: int32 (or int64 on Linux/Mac - see the platform note above)
 
 # Accessing multiple rows in a DataFrame with loc
 new_df.loc["Bob":"Charlie"] # Output: DataFrame with Bob and Charlie's scores, e.g.,
@@ -119,7 +129,7 @@ new_df.iloc[0] # Output: Series with Alice's scores, e.g.,
 # Math       83
 # Science    53
 # English    70
-# Name: Alice, dtype: int64
+# Name: Alice, dtype: int32 (or int64 on Linux/Mac - see the platform note above)
 
 # Accessing multiple rows in a DataFrame with loc
 new_df.loc["Bob":"Charlie"] # Output: DataFrame with Bob and Charlie's scores, e.g.,
@@ -179,8 +189,12 @@ new_df.index = new_indices
 # Student4   David    78       95       12
 
 # Setting display options for floating-point numbers in Pandas
-# set_option is a top-level pandas function, not a DataFrame method
+# set_option is a top-level pandas function, not a DataFrame method.
+# This setting is global and persists for the rest of the session, so it's
+# reset immediately below - otherwise every float table later in this file
+# would silently switch to 4 decimal places instead of the default 6.
 pd.set_option('display.float_format', '{:.4f}'.format)
+pd.reset_option('display.float_format')
 
 # Multi Indexing in a DataFrame
 first_index = ["Group1", "Group1", "Group2", "Group2"]
@@ -453,23 +467,24 @@ csv_df = pd.read_csv('data/employees.csv') # Output: DataFrame containing the da
 # 48         IT   Emp_49   35258           1       New York
 # 49  Marketing   Emp_50  117538           4       New York
 
-csv_df.describe() # Output: Summary statistics of the DataFrame, e.g.,
-#              Salary  Experience
-# count      50.000000   50.000000
-# mean    78344.500000    7.060000
-# std     27817.603904    3.966235
-# min     31016.000000    1.000000
-# 25%     53687.250000    3.000000
-# 50%     78769.500000    7.000000
-# 75%    100778.000000   10.000000
-# max    119812.000000   14.000000
+csv_df.describe() # Output: Summary statistics of the DataFrame - includes Performance_Score since it's also numeric
+#              Salary  Experience  Performance_Score
+# count      50.000000   50.000000          50.000000
+# mean    78344.500000    7.060000           3.200000
+# std     27817.603904    3.966235           1.324803
+# min     31016.000000    1.000000           1.000000
+# 25%     53687.250000    3.000000           2.000000
+# 50%     78769.500000    7.000000           3.000000
+# 75%    100778.000000   10.000000           4.000000
+# max    119812.000000   14.000000           5.000000
 
 # Calculating the mean of the "Salary" column in the DataFrame
 csv_df['Salary'].mean() # Output: Mean of the "Salary" column, e.g., 78344.5
 
-csv_df[['Salary', 'Experience']].mean() # Output: Mean of the "Salary" and "Experience" columns, e.g., 
-# Salary        78344.5
-# Experience    7.06
+csv_df[['Salary', 'Experience']].mean() # Output: Mean of the "Salary" and "Experience" columns
+# Salary        78344.50
+# Experience        7.06
+# dtype: float64
 
 # Experience greater than 5
 csv_df[csv_df['Experience'] > 5].count() # Output: Count of non-null values in each column for rows where Experience is greater than 5
