@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
+*.db
+.DS_Store
+.vscode/
+
+# Artifacts created by running specific files in this repo
+test.txt
+age_weight_plot.png
