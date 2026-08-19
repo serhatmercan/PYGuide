@@ -105,7 +105,7 @@ matrix6.T # Output: array([[7, 9, 11], [8, 10, 12]])
 array1 = np.random.randint(1, 100, 5) # Output: array of 5 random integers between 1 and 99, e.g., array([83, 53, 70, 44, 60])
 
 # Matrix: Operations -> Conditional selection
-array1 > 50 # Output: array([ True,  True,  True, False,  True])
+array1 > 50 # Output: elementwise boolean mask, e.g., array([ True,  True,  True, False,  True])
 array1[array1 > 50] # Output: array of elements in array1 that are greater than 50, e.g., array([83, 53, 70, 60])
 
 # Matrix: Operations -> z-score normalization

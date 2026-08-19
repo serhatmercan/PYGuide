@@ -5,6 +5,10 @@ import seaborn as sns
 # Load the Titanic dataset
 df = sns.load_dataset("titanic")
 
+# Note: in a real ML workflow, fit encoders on the training set and reuse them
+# to transform the test set, so both end up with the same category-to-code
+# mapping. The examples below encode the whole frame for brevity.
+
 # Check for missing values in the specified columns
 df[["sex", "class", "embark_town"]].isna().sum() 
 # Output:
@@ -31,6 +35,11 @@ df_one_hot.columns
 # Index; older pandas reports dtype='object' instead.
 
 # === Label Encoding ===
+# Note: LabelEncoder is intended for target labels. For feature columns prefer
+# pd.get_dummies / OneHotEncoder for unordered categories, or OrdinalEncoder
+# when the categories have a meaningful order - LabelEncoder's arbitrary
+# integers imply an ordering that unordered features do not have.
+
 # Create a copy of the original DataFrame to avoid modifying it directly
 df_label_encoded = df.copy()
 

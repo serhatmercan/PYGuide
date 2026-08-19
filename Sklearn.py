@@ -2,15 +2,14 @@ import numpy as np
 import seaborn as sns
 
 # Load the dataset
-# Originally read a local CSV ('...csv', a broken placeholder path); swapped
-# to seaborn's tips dataset (approved 2026-08-09) so this file is self-contained
+# seaborn's built-in tips dataset, so this file is self-contained and needs no
+# local data file
 df = sns.load_dataset("tips")
 
 # Independent and Dependent Features
-# Predicting tip amount from total bill amount - this pairing was my choice
-# when swapping datasets; the original file predicted "Exam Score" from
-# "Study Hours" on a CSV that never existed in the repo, so there's no
-# original variable relationship to preserve here.
+# Predicting tip amount from total bill amount. The selected feature/target
+# pair is illustrative and intended to demonstrate the regression workflow,
+# not to model tipping behaviour seriously.
 X = df[['total_bill']]
 y = df['tip']
 
@@ -27,7 +26,9 @@ from sklearn.preprocessing import StandardScaler
 # Create an instance of the StandardScaler
 scaler = StandardScaler()
 
-# Fit the scaler to the training data and transform both the training and testing data
+# Fit the scaler to the training data and transform both the training and testing data.
+# Fitting on the training set only - and reusing that fitted scaler for the test
+# set - is what keeps test-set statistics out of the training data.
 X_train = scaler.fit_transform(X_train) # Fit the scaler to the training data and transform it
 X_test = scaler.transform(X_test) # Transform the testing data using the same scaler fitted on the training data
 

@@ -631,19 +631,21 @@ x_series[~x_series.str.isnumeric()]
 # Behaviour varies by version: pandas 3.x gives string Series a dedicated
 # 'str' dtype; on older pandas this reads dtype: object instead.
 
-# str.replace converts values like "5M" to "5000"
-x_series = x_series.str.replace("M", "000")
+# "M" here means millions, so the shorthand expands to six zeros:
+# "5M" becomes "5000000". Replacing with fewer zeros would silently shift
+# every shorthand value by a factor of a thousand.
+x_series = x_series.str.replace("M", "000000")
 # Output:
-# 0     120
-# 1    5000
-# 2     340
-# 3    2000
-# 4      75
-# 5    1000
-# 6     980
-# 7    3000
-# 8      60
-# 9     410
+# 0        120
+# 1    5000000
+# 2        340
+# 3    2000000
+# 4         75
+# 5    1000000
+# 6        980
+# 7    3000000
+# 8         60
+# 9        410
 # dtype: str
 
 # .astype only accepts errors='raise' or errors='ignore' - it has no 'coerce'
@@ -651,14 +653,14 @@ x_series = x_series.str.replace("M", "000")
 # pd.to_numeric(..., errors='coerce') instead.
 x_series = pd.to_numeric(x_series, errors='coerce')
 # Output:
-# 0     120
-# 1    5000
-# 2     340
-# 3    2000
-# 4      75
-# 5    1000
-# 6     980
-# 7    3000
-# 8      60
-# 9     410
+# 0        120
+# 1    5000000
+# 2        340
+# 3    2000000
+# 4         75
+# 5    1000000
+# 6        980
+# 7    3000000
+# 8         60
+# 9        410
 # dtype: int64

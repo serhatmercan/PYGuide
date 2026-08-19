@@ -90,7 +90,7 @@ y_scatter = np.random.rand(50) # 50 random values between 0 and 1 for y-axis
 plt.scatter(x_scatter, y_scatter, color="purple", marker="x") # Renders: purple "x" markers at each (x, y) point
 
 # Scatter plot w/ DataFrame: Plotting data loaded from a DataFrame
-tips = sns.load_dataset("tips") # Originally read a local data.csv with "Height"/"Weight" columns; swapped to seaborn's tips dataset (approved 2026-08-09) so this file is self-contained
+tips = sns.load_dataset("tips") # seaborn's built-in tips dataset, so this example needs no local data file
 
 plt.scatter("total_bill", "tip", data=tips) # Renders: a scatter plot of total bill vs tip amount
 

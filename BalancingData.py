@@ -4,21 +4,28 @@ import pandas as pd
 from sklearn.utils import resample
 
 # Resampling and Encoding Example
+# Note: in a real ML workflow, split the data first and resample the training
+# set only. Resampling before the split leaks duplicated or synthetic minority
+# samples into the test set and inflates the reported scores.
+
+# Seed NumPy's global RNG so the synthetic features below are reproducible
+np.random.seed(42)
+
 # Create a sample imbalanced dataset
-set1no = 900
-set2no = 100
+n_majority = 900
+n_minority = 100
 
 # Generate synthetic data for two classes
 df1 = pd.DataFrame({
-    "feature_1": np.random.normal(loc=0, scale=1, size=set1no),
-    "feature_2": np.random.normal(loc=0, scale=1, size=set1no),
-    "target": [0] * set1no
+    "feature_1": np.random.normal(loc=0, scale=1, size=n_majority),
+    "feature_2": np.random.normal(loc=0, scale=1, size=n_majority),
+    "target": [0] * n_majority
 })
 
 df2 = pd.DataFrame({
-    "feature_1": np.random.normal(loc=0, scale=1, size=set2no),
-    "feature_2": np.random.normal(loc=0, scale=1, size=set2no),
-    "target": [1] * set2no
+    "feature_1": np.random.normal(loc=0, scale=1, size=n_minority),
+    "feature_2": np.random.normal(loc=0, scale=1, size=n_minority),
+    "target": [1] * n_minority
 })
 
 # Combine the two datasets to create an imbalanced dataset
@@ -64,7 +71,9 @@ df_downsampled['target'].value_counts()
 
 # === SMOTE (Synthetic Minority Over-sampling Technique) ===
 # Generate synthetic samples for the minority class
-oversample = SMOTE()
+# random_state fixes the synthetic samples SMOTE generates, so repeated runs
+# produce the same result
+oversample = SMOTE(random_state=42)
 
 # Apply SMOTE to the features and target variable
 (X, y) = oversample.fit_resample(df[["feature_1", "feature_2"]], df["target"]) 

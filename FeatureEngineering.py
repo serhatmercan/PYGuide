@@ -16,6 +16,11 @@ df.isnull().sum()
 df.drop(columns=["deck"], inplace=True)  
 
 # === Imputation ===
+# Note: in a real ML workflow, compute the fill statistic on the training set
+# only and apply it to the test set (sklearn's SimpleImputer inside a Pipeline
+# does this for you). Imputing across the full dataset first lets test-set
+# values influence the fill values.
+
 # Mean Imputation
 df["age_mean"] = df["age"].fillna(df["age"].mean()) # Fill missing values in 'age' with the mean age
 
