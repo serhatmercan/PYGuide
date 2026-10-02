@@ -161,10 +161,26 @@ If you're on different versions, expect differences in a few specific places tha
 - **The machine-learning files are syntax references, not modelling advice.** They demonstrate individual steps — encoding, imputation, resampling, a regression pipeline — and each notes inline where a real workflow would order things differently to avoid leaking test data.
 - **Verification is local script execution only.** There is no test suite and no CI in this repository.
 
-## License
+## Related Guides
 
-MIT — see [LICENSE](LICENSE).
+| Guide | Focus |
+|---|---|
+| [ABAPGuide](https://github.com/serhatmercan/ABAPGuide) | ABAP language and techniques, classic to modern |
+| [CDSGuide](https://github.com/serhatmercan/CDSGuide) | ABAP CDS, structured route through both generations |
+| [CDS-Cookbook](https://github.com/serhatmercan/CDS-Cookbook) | CDS and AMDP pattern library |
+| [GWGuide](https://github.com/serhatmercan/GWGuide) | SAP Gateway: SEGW and OData V2 |
+| [UIGuide](https://github.com/serhatmercan/UIGuide) | SAPUI5 and Fiori control and pattern reference |
+| [JSGuide](https://github.com/serhatmercan/JSGuide) | Plain JavaScript and browser APIs |
+| **PYGuide** (this repository) | Python reference with verified outputs |
 
 ## Author
 
-Serhat Mercan — [github.com/serhatmercan](https://github.com/serhatmercan)
+**Serhat Mercan** — SAP BTP & AI Technical Lead | Generative AI for SAP | ABAP & SAP Fiori/UI5
+
+- LinkedIn: [serhat-mercan](https://www.linkedin.com/in/serhat-mercan/)
+- E-mail: serhatmercan94@gmail.com
+- GitHub: [serhatmercan](https://github.com/serhatmercan)
+
+## License
+
+MIT — see [LICENSE](LICENSE).
